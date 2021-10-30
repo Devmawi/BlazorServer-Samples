@@ -1,5 +1,5 @@
 {
-  
+
   "compileOnSave": true,
   "compilerOptions": {
     "noImplicitAny": false,
@@ -7,13 +7,18 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "ES2015",
-    
+
     "allowUmdGlobalAccess": true,
     "isolatedModules": false,
     "lib": [ "DOM", "DOM.Iterable", "ES2015" ]
   },
-  
-  "typeAcquisition": {"enable": true},
+
+  "typeAcquisition": {
+    "enable": true,
+    "include": [
+      "node"
+    ]
+  },
   "exclude": [
     "node_modules"
   ]
