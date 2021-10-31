@@ -7,19 +7,18 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "ES2015",
-
     "allowUmdGlobalAccess": true,
+    "allowSyntheticDefaultImports": true,
     "isolatedModules": false,
-    "lib": [ "DOM", "DOM.Iterable", "ES2015" ]
-  },
-
-  "typeAcquisition": {
-    "enable": true,
-    "include": [
-      "node"
-    ]
+    "moduleResolution": "Classic",
+    "lib": [ "DOM", "ES2015", "DOM.Iterable" ]
   },
   "exclude": [
-    "node_modules"
-  ]
+    "node_modules",
+    "wwwroot/lib"
+  ],
+  "typeAcquisition": {
+    "enable": true,
+    "include": [ "jquery" ]
+  }
 }

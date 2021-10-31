@@ -1,4 +1,4 @@
-/// <reference path="../lib/microsoft/signalr/dist/esm/index.d.ts" />
+/// <reference path="../lib/microsoft/signalr/dist/esm/browser-index.d.ts" />
 export function startCounterHubConnection() {
     var hubConnection = new signalR
         .HubConnectionBuilder()
