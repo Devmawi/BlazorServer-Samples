@@ -1,25 +1,56 @@
 ﻿@page "/"
+@using Microsoft.Extensions.Configuration.Json
+@using System.Text.Json.Serialization
+@using System.Text.Json
+@using System.Text.Json.Nodes
 
 <h1>Current Configuration</h1>
 <form>
-    <input value="@Options.CurrentValue.ConfigurationValue" />
+    <input @bind-value="@ConfigurationValue" />
+    <button @onclick="HandleClick" type="button">Write</button>
 </form>
 
 @code {
     [Inject]
     public IOptionsMonitor<AppOptions> Options { get; set; }
+    // public IOptionsSnapshot
 
     [Inject]
     IConfiguration Configuration { get; set; }
 
+    public string ConfigurationValue { get; set; }
+
+    //[Inject]
+    //IConfigurationProvider Services { get; set; }
+
     protected override void OnInitialized()
     {
+
+
+        ConfigurationValue = Options.CurrentValue.ConfigurationValue;
         base.OnInitialized();
         Options.OnChange(async _ =>
         {
-            await InvokeAsync(()=> {
+            await InvokeAsync(() =>
+            {
                 StateHasChanged();
             });
         });
+    }
+
+    public void HandleClick()
+    {
+        var jsonConfigurationProvider = (Configuration as ConfigurationRoot)
+                                        .Providers
+                                            .Where(p => p.GetType() == typeof(JsonConfigurationProvider))
+                                                .Last() as JsonConfigurationProvider;
+
+        var file = jsonConfigurationProvider.Source.FileProvider.GetFileInfo(jsonConfigurationProvider.Source.Path);
+        var jdoc = JsonNode.Parse(System.IO.File.ReadAllText(file.PhysicalPath));
+
+        Options.CurrentValue.ConfigurationValue = ConfigurationValue;
+        jdoc.AsObject()["App"] = JsonNode.Parse(JsonSerializer.Serialize(Options.CurrentValue));
+
+        System.IO.File.WriteAllText(file.PhysicalPath, jdoc.ToJsonString(new JsonSerializerOptions() { WriteIndented = true }));
     }
 }
