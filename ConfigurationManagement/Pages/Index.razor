@@ -1,0 +1,25 @@
+﻿@page "/"
+
+<h1>Current Configuration</h1>
+<form>
+    <input value="@Options.CurrentValue.ConfigurationValue" />
+</form>
+
+@code {
+    [Inject]
+    public IOptionsMonitor<AppOptions> Options { get; set; }
+
+    [Inject]
+    IConfiguration Configuration { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Options.OnChange(async _ =>
+        {
+            await InvokeAsync(()=> {
+                StateHasChanged();
+            });
+        });
+    }
+}
