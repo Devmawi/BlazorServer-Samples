@@ -13,7 +13,8 @@ export function createVideo(id) {
                 console.log(
                     'manifest loaded, found ' + data.levels.length + ' quality level'
                 );
-                video.play();
+                setTimeout(() => { video.play(); }, 6000)
+                
             });
         });
     }
