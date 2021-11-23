@@ -1,0 +1,1 @@
+﻿# Output for video streaming

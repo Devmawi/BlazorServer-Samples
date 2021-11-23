@@ -1,0 +1,8 @@
+﻿.layout-wrapper {
+    width: 100%;
+   
+}
+
+.layout-wrapper video {
+    aspect-ratio: 2 / 1;
+}

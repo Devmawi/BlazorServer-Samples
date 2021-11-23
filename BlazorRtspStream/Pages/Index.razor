@@ -1,0 +1,18 @@
+﻿@page "/"
+
+<h1>HLS Demo</h1>
+<div class="layout-wrapper">
+    <video autoplay muted class="w-100" id="video"></video>
+</div>
+@*<button id="play" type="button" onclick="document.getElementById('video').play();">Play</button>*@
+@code {
+    [Inject]
+    IJSRuntime JSRuntime { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var obj = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/js/Pages/Index.razor.js");
+        await obj.InvokeVoidAsync("createVideo", "video");
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}
