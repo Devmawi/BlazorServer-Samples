@@ -2,7 +2,7 @@
 export function createVideo(id) {
     if (Hls.isSupported()) {
         var video = document.getElementById(id);
-        var hls = new Hls({ autoStartLoad: true, levelLoadingMaxRetry: 4 });
+        var hls = new Hls({ autoStartLoad: true, levelLoadingMaxRetry: 4, manifestLoadingTimeOut: 15000 });
         // bind them together
         hls.attachMedia(video);
         // MEDIA_ATTACHED event is fired by hls object once MediaSource is ready
