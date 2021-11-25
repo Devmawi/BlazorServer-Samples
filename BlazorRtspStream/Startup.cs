@@ -1,4 +1,5 @@
 
+using BlazorRtspStream.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace BlazorRtspStream
             services.AddServerSideBlazor();
             services.AddDirectoryBrowser();
             services.AddHostedService<RtspBackgroundService>();
+            services.AddHostedService<RtspInMemoryBackgroundService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +70,7 @@ namespace BlazorRtspStream
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
+                endpoints.MapHub<VideoStreamHub>("/videoStreamHub");
                 endpoints.MapFallbackToPage("/_Host");
             });
         }

@@ -25,16 +25,17 @@ namespace BlazorRtspStream
 
             using var libVLC = new LibVLC(enableDebugLogs: true);
             using var media = new Media(libVLC, 
-                                new Uri("rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4")
+                                new Uri("YOUR RSTP ADDRESS")
                                 // https://wiki.videolan.org/Documentation:Streaming_HowTo/Streaming_for_the_iPhone/
                                 // https://wiki.videolan.org/Documentation:Streaming_HowTo/Command_Line_Examples/#HTTP_streaming
                                 , ":sout=#standard{access=livehttp{seglen=10,delsegs=true,numsegs=5,index=" + playListFile + ",index-url=http://localhost:5000/videos//" + segmentName + "},mux=ts{use-key-frames},dst=" + segmentFile + "}"
                                 , ":sout-keep"
                                 );
             using var mp = new MediaPlayer(media);
-
+            
             libVLC.Log += (sender, e) => Console.WriteLine($"[{e.Level}] {e.Module}:{e.Message}");
             mp.Play(media);
+           
             while (!stoppingToken.IsCancellationRequested) { await Task.Delay(3000, stoppingToken); };
             
             await Task.CompletedTask;

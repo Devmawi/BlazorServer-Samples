@@ -1,0 +1,18 @@
+﻿@page "/VideoStream"
+
+<h3>VideoStream</h3>
+<div class="w-100">
+    <img class="w-100" />
+</div>
+
+@code {
+    [Inject]
+    IJSRuntime JSRuntime { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var obj = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/js/Pages/VideoStream.razor.js");
+        await obj.InvokeVoidAsync("startSignalRClient");
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}
