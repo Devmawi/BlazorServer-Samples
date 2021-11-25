@@ -19,6 +19,7 @@
       "commandName": "Project",
       "workingDirectory": "$(OutDir)",
       "launchBrowser": true,
+      "launchUrl": "VideoStream",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
